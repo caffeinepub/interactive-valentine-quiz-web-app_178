@@ -1,0 +1,19 @@
+{
+  "frontend/src/App.tsx": "Main application component managing view state (welcome, quiz, results, celebration) and routing between screens with smooth transitions.",
+  "frontend/src/views/WelcomeScreen.tsx": "Landing screen displaying the quiz title, subtitle, and start button with romantic styling and heart icon.",
+  "frontend/src/components/QuizFlow.tsx": "Quiz controller managing question progression, score tracking, and celebration animations with progress indicator.",
+  "frontend/src/components/QuestionCard.tsx": "Individual question card component displaying question text and multiple-choice options with hover effects and answer feedback.",
+  "frontend/src/data/valentineQuizQuestions.ts": "Data file containing all 5 quiz questions with their options and correct answer indices.",
+  "frontend/src/views/PerfectResultScreen.tsx": "Perfect score (5/5) result screen showing winning message, meme image, date coupon, and redemption flow.",
+  "frontend/src/views/NonPerfectResultScreen.tsx": "Non-perfect score result screen with teasing message, meme image, and Valentine trick (expanding Yes button).",
+  "frontend/src/views/CelebrationScreen.tsx": "Final celebration screen displayed when user clicks Yes, showing romantic message with continuous confetti animation.",
+  "frontend/src/components/ValentineLayout.tsx": "Main layout wrapper providing floating hearts background, audio toggle, and footer with attribution across all screens.",
+  "frontend/src/components/FloatingHeartsBackground.tsx": "Animated background component with pastel gradients, floating hearts pattern, and animated heart emojis.",
+  "frontend/src/components/ConfettiHeartsBurst.tsx": "Confetti and hearts particle animation component supporting both burst and continuous modes for celebrations.",
+  "frontend/src/components/AudioToggle.tsx": "Floating audio control button allowing users to mute/unmute sound effects throughout the app.",
+  "frontend/src/hooks/useAudio.ts": "Custom hook managing audio state and providing sound effect functions for correct answers and celebrations.",
+  "frontend/src/hooks/useQueries.ts": "Empty placeholder file as all quiz logic is client-side with no backend queries needed.",
+  "frontend/src/index.css": "Global styles defining romantic pastel color palette, custom animations, and design tokens for the Valentine theme.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with romantic color palette, custom font families, and design system tokens.",
+  "frontend/src/main.tsx": "Application entry point with QueryClient provider, removing InternetIdentity for public access."
+}
