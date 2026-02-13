@@ -1,272 +1,58 @@
 {
   "kind": "build_request",
-  "title": "Interactive Valentine-themed 5-question love quiz with playful results and Valentine trick",
-  "priority": "normal",
+  "title": "Fix quiz flow getting stuck after the second question",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a mobile-first, single-page interactive Valentine quiz experience with a consistent romantic pastel visual theme (soft pinks, beige, blush, red accents), rounded card UI, subtle animations, smooth transitions, and playful micro-interactions; keep performance fast and the overall tone loving, funny, slightly teasing, extremely cute and romantic.",
+      "id": "REQ-14",
+      "text": "Fix the quiz flow so it always advances from Question 2 to Question 3 (and continues through Question 5) after the user selects an option, without getting stuck or leaving the UI in a disabled state.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-1"
         ],
         "quotes": [
-          "Create a very aesthetic, romantic, fun and playful interactive web experience for my wife.",
-          "It should be a cute 5-question MCQ love quiz with soft romantic UI, pastel colours, hearts, subtle animations, smooth transitions and playful micro-interactions.",
-          "The tone should be: Loving, Funny, Slightly teasing, Extremely cute and romantic",
-          "Extra UI / UX Requirements: Soft pastel gradients, Floating hearts in background, Cute rounded cards, Mobile-first responsive design, Keep it simple, fast, and very romantic"
+          "It's not moving after second question"
         ]
       },
       "acceptanceCriteria": [
-        "All screens share a cohesive romantic pastel theme with consistent typography, spacing, and component styling (no default/unstyled pages).",
-        "UI is responsive and usable on small mobile screens without horizontal scrolling.",
-        "Transitions between screens/questions feel smooth (no abrupt layout jumps)."
+        "From a fresh load, selecting any option on Question 1 advances to Question 2 after the existing delay/animation behavior.",
+        "Selecting any option on Question 2 advances to Question 3 after the existing delay/animation behavior.",
+        "On each newly displayed question, the answer options are enabled/clickable (not permanently disabled from the previous question).",
+        "The user can complete all 5 questions in sequence without needing to refresh the page."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Implement the Welcome Screen with: title text exactly “How Well Do You Know  💖”, subtitle text exactly “A tiny test made with love just for you”, and a large primary CTA button labeled exactly “Start the Love Test →” that starts the quiz flow.",
+      "id": "REQ-15",
+      "text": "Correct any state/score computation issues in the quiz controller so the final score passed to the results routing is accurate regardless of timing (e.g., correct answers that trigger celebration delays).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-user-1"
         ],
         "quotes": [
-          "1. Welcome Screen\n\nShow a landing screen with:\n• Title: “How Well Do You Know  💖”\n• Subtitle: “A tiny test made with love just for you”\n• A big cute button: “Start the Love Test →”"
+          "It's not moving after second question"
         ]
       },
       "acceptanceCriteria": [
-        "The welcome screen renders the specified title, subtitle, and CTA text exactly.",
-        "Clicking the CTA begins Question 1 of 5."
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "Implement the 5-question multiple-choice quiz flow showing one question at a time in a cute card UI, with a visible progress indicator (e.g., “Question 1/5”, “Question 2/5”, etc.) and a progress bar. Each option must have fun hover/press animations, and selecting the correct answer triggers a heart/confetti animation feedback.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "2. The Quiz (5 MCQs)\n\nEach question should appear one at a time with:\n• Cute card UI\n• Progress bar (Question 1/5, 2/5 etc.)\n• Fun hover animations on options\n• Heart/confetti animation on correct answer"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Only one question is visible at a time and the UI clearly indicates current progress (text + bar).",
-        "Options have noticeable hover/press micro-interactions on desktop and tactile feedback on mobile.",
-        "When the correct option is selected, a heart/confetti animation plays."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Use exactly these questions, options, and correct answers:\n\nQ1. “What was our first long ride?” Options: A. “Marina”, B. “Perungudi Highway” (correct), C. “DLF”, D. “I don't know”\n\nQ2. “Our first movie together?” Options: A. “Conjuring”, B. “Materialist”, C. “Final destination” (correct), D. “I don't know”\n\nQ3. “What was my first gift/ thing bought to you?” Options: A. “Slipper”, B. “Teddy”, C. “Body wash” (correct), D. “My heart”\n\nQ4. “If I crave for smoething what it would be?” Options: A. “Coffee”, B. “Biriyani”, C. “Pizza”, D. “Parotta” (correct)\n\nQ5. “Who is most beautiful person in the world?” Options: A. “Aruna”, B. “Aruna” (correct), C. “Aruna”, D. “Aruna”",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Questions & Correct Answers\n\nQ1. What was our first long ride?\nOptions:\nA. Marina\nB. Perungudi Highway ✅\nC. DLF\nD. I don't know\n\nQ2. Our first movie together?\nOptions:\nA. Conjuring\nB. Materialist\nC. Final destination✅\nD. I don't know\n\nQ3. What was my first gift/ thing bought to you?\nOptions:\nA. Slipper\nB. Teddy\nC. Body wash ✅\nD. My heart\n\nQ4. If I crave for smoething what it would be?\nOptions:\nA. Coffee\nB. Biriyani\nC. Pizza\nD. Parotta ✅\n\nQ5. Who is most beautiful person in the world?\nOptions:\nA. Aruna\nB. Aruna ✅\nC. Aruna\nD. Aruna"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All question prompts and option labels match exactly (including capitalization and punctuation).",
-        "The correct answer for each question matches the user-provided ✅ choice."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Implement scoring and results routing: after the 5th question, calculate the total correct answers and show one of two result screens: (A) Perfect score path for 5/5, (B) Non-perfect path for any score < 5.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "3. Result Logic\n\nIf Score = 5/5 (Perfect)\n...\nIf Score < 5\n..."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Finishing the quiz always navigates to exactly one result screen.",
-        "Score logic correctly distinguishes 5/5 from <5 in all cases."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Perfect-score (5/5) result screen must display text exactly “OMG 5/5!!! 😭💖\", show a cute romantic couple/cartoon couple meme image, then show the coupon copy:\n\n“🎟 You have won a DATE COUPON!\nRedeemable for: Lifelong lots of love, food, cuddles & surprises.”\n\nInclude a button labeled exactly “Redeem My Date 💌”. When clicked, replace/show the message exactly: “Your wife will contact you shortly for booking 😉”.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "If Score = 5/5 (Perfect)\n\nShow a cute winning screen:\n\nText:\n\n“OMG 5/5!!! 😭💖\"\n\nShow a cute meme (romantic couple / cartoon couple).\n\nThen show:\n\n🎟 You have won a DATE COUPON!\nRedeemable for: Lifelong lots of love, food, cuddles & surprises.\n\nButton:\n“Redeem My Date 💌”\n\nOn click:\nShow message:\n\n“Your wife will contact you shortly for booking 😉”"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The perfect-score screen shows the specified headline text exactly.",
-        "A meme image is displayed on the perfect-score screen.",
-        "The coupon text matches exactly and is visible before redemption.",
-        "Clicking “Redeem My Date 💌” displays the specified follow-up message exactly."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Non-perfect (<5) result screen must display a cute/funny teasing meme image (not mean), show text exactly:\n\n“Hmm… not perfect 👀\nYou need to do better… ”\n\nThen display: “Will you still be my Valentine? 💘” with two buttons labeled exactly “Yes 💖” and “No 😈”.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "If Score < 5\n\nShow a fun teasing meme (not mean, just cute/funny).\n\nText:\n\n“Hmm… not perfect 👀\nYou need to do better… ”\n\nThen show:\n\n“Will you still be my Valentine? 💘”\n\nWith two buttons:\n• Yes 💖\n• No 😈"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The non-perfect screen shows the specified multi-line text exactly.",
-        "A teasing meme image is displayed on the non-perfect screen.",
-        "Both buttons (“Yes 💖”, “No 😈”) are visible and clickable initially."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Implement the Valentine trick interaction on the non-perfect path: each time the user clicks “No 😈”, increase the “Yes 💖” button size and decrease the “No 😈” button size, and update the prompt text as follows: after first No click show “Are you sure?? 🥺”; after second No click show “You have no escape 😌”; continue scaling on subsequent No clicks until “Yes” fills most of the screen and “No” becomes almost impossible to click.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "4. The Valentine Trick (Important)\n\nIf she clicks No:\n• The Yes button becomes bigger\n• The No button becomes smaller\n• Text changes to:\n“Are you sure?? 🥺”\n\nIf she clicks No again:\n• Yes becomes EVEN BIGGER\n• No becomes tiny\n• Text:\n“You have no escape 😌”\n\nRepeat until:\nThe Yes button fills most of the screen and No is almost impossible to click."
-        ]
-      },
-      "acceptanceCriteria": [
-        "After the first click on “No 😈”, the prompt text becomes exactly “Are you sure?? 🥺” and Yes is visibly larger while No is smaller.",
-        "After the second click on “No 😈”, the prompt text becomes exactly “You have no escape 😌” and the size difference increases further.",
-        "Additional “No 😈” clicks continue increasing Yes and shrinking No until Yes dominates the layout and No is very difficult (but still technically possible) to click."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "When the user clicks “Yes 💖” (from the non-perfect screen at any stage), show a final celebration screen/message with text exactly “YAY!!! You are my Valentine forever 💖🌹” plus confetti + hearts + romantic animation.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "When she finally clicks Yes:\nShow:\n\n“YAY!!! You are my Valentine forever 💖🌹”\nConfetti + hearts + romantic animation."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Clicking “Yes 💖” always transitions to the final celebration view.",
-        "The final view displays the specified text exactly.",
-        "A confetti effect and heart/romantic animation are visibly rendered on the final view."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Add a subtle animated background with floating hearts across the app (welcome, quiz, and result screens), using soft pastel gradients; animations must be subtle and not interfere with readability or button interactions.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Extra UI / UX Requirements\n• Soft pastel gradients\n• Floating hearts in background"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A floating-hearts background effect is visible on all major screens.",
-        "Foreground cards and text remain readable (sufficient contrast) and interactive elements remain clickable."
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Add optional audio: gentle background music and subtle sound effects for key interactions (e.g., start quiz, selecting an option, correct answer celebration, confetti). Provide a clear UI control to mute/unmute; default must be muted until the user explicitly enables audio.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "gentle music optional.",
-          "Subtle sound effects (optional)"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A user-visible toggle exists to enable/disable audio.",
-        "Audio does not autoplay on page load; it only plays after the user opts in.",
-        "When muted, no music or sound effects play."
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Provide a shareable link experience with no login required: the app should be accessible via URL without authentication, and the URL should be stable and shareable (no requirement to preserve quiz progress across devices, but the app must load directly into the experience when opened).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Shareable link",
-          "No login required"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Opening the app in an incognito window works without any login flow.",
-        "Copying and sharing the app URL opens the same app experience successfully."
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Include the required generated meme/illustration images as static assets and render them in the relevant result screens; store generated images under frontend/public/assets/generated and reference them directly from the frontend (do not serve images through the backend).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Show a cute meme (romantic couple / cartoon couple).",
-          "Show a fun teasing meme (not mean, just cute/funny)."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Generated images are present under frontend/public/assets/generated and load correctly in the built app.",
-        "The perfect-score and non-perfect result screens each display their respective image.",
-        "No backend endpoints are used to fetch/serve these images."
+        "Completing the quiz with 5 correct answers results in the perfect-score (5/5) results path.",
+        "Completing the quiz with fewer than 5 correct answers results in the non-perfect results path.",
+        "The score displayed/used at completion matches the number of questions answered correctly (no off-by-one errors due to animation/timeout state)."
       ]
     }
   ],
   "constraints": [
-    "Use English for all user-facing text.",
-    "No login required (do not add Internet Identity authentication gates).",
-    "Do not edit files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT; compose UI using those components instead.",
-    "Backend must remain single-actor if used; avoid adding extra services or external databases."
+    "Frontend immutable paths must not be edited: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
+    "Keep the backend as a single Motoko actor; do not introduce additional backend services.",
+    "Use English for any user-facing text introduced as part of this fix."
   ],
   "nonGoals": [
-    "No requirement to store quiz results persistently on-chain or across sessions.",
-    "No requirement for user accounts, profiles, or authentication.",
-    "No requirement for real-time multiplayer, chat, or external API integrations."
+    "Adding new quiz questions or changing the existing questions/options/correct answers.",
+    "Adding authentication or requiring login.",
+    "Redesigning the app’s visual theme beyond what is necessary to fix the quiz navigation bug."
   ],
   "imageRequirements": {
-    "required": [
-      "Cute romantic cartoon couple meme illustration, pastel palette (valentine-win-meme.dim_1200x800.png)",
-      "Cute funny teasing Valentine meme illustration, pastel palette (valentine-tease-meme.dim_1200x800.png)",
-      "Seamless floating hearts background pattern, soft pastel tones (floating-hearts-bg.dim_1600x900.png)"
-    ],
+    "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

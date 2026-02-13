@@ -1,8 +1,8 @@
 {
   "frontend/src/App.tsx": "Main application component managing view state (welcome, quiz, results, celebration) and routing between screens with smooth transitions.",
   "frontend/src/views/WelcomeScreen.tsx": "Landing screen displaying the quiz title, subtitle, and start button with romantic styling and heart icon.",
-  "frontend/src/components/QuizFlow.tsx": "Quiz controller managing question progression, score tracking, and celebration animations with progress indicator.",
-  "frontend/src/components/QuestionCard.tsx": "Individual question card component displaying question text and multiple-choice options with hover effects and answer feedback.",
+  "frontend/src/components/QuizFlow.tsx": "Quiz controller managing question progression with functional state updates to prevent stale closures, deterministic score calculation, and stable key prop for QuestionCard to ensure proper reset between questions.",
+  "frontend/src/components/QuestionCard.tsx": "Individual question card component with useEffect hook to reset local state (selectedIndex/hasAnswered) when the question prop changes, ensuring options are re-enabled for each new question.",
   "frontend/src/data/valentineQuizQuestions.ts": "Data file containing all 5 quiz questions with their options and correct answer indices.",
   "frontend/src/views/PerfectResultScreen.tsx": "Perfect score (5/5) result screen showing winning message, meme image, date coupon, and redemption flow.",
   "frontend/src/views/NonPerfectResultScreen.tsx": "Non-perfect score result screen with teasing message, meme image, and Valentine trick (expanding Yes button).",

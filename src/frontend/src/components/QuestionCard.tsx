@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import type { QuizQuestion } from '../data/valentineQuizQuestions';
@@ -11,6 +11,12 @@ interface QuestionCardProps {
 export default function QuestionCard({ question, onAnswer }: QuestionCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
+
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedIndex(null);
+    setHasAnswered(false);
+  }, [question]);
 
   const handleOptionClick = (index: number) => {
     if (hasAnswered) return;

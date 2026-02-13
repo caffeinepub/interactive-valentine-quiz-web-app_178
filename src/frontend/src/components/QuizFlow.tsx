@@ -22,28 +22,40 @@ export default function QuizFlow({ onComplete }: QuizFlowProps) {
     const isCorrect = selectedIndex === currentQuestion.correctIndex;
     
     if (isCorrect) {
-      setScore(score + 1);
+      // Update score immediately with functional update
+      setScore(prevScore => prevScore + 1);
       setShowCelebration(true);
       playCorrectSound();
       
       setTimeout(() => {
         setShowCelebration(false);
-        moveToNext();
+        moveToNext(true); // Pass isCorrect flag
       }, 1500);
     } else {
       setTimeout(() => {
-        moveToNext();
+        moveToNext(false); // Pass isCorrect flag
       }, 800);
     }
   };
 
-  const moveToNext = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      const finalScore = score + (showCelebration ? 1 : 0);
-      onComplete(finalScore);
-    }
+  const moveToNext = (wasCorrect: boolean) => {
+    // Use functional state update to avoid stale closure
+    setCurrentQuestionIndex(prevIndex => {
+      const nextIndex = prevIndex + 1;
+      
+      if (nextIndex >= questions.length) {
+        // Quiz is complete - calculate final score
+        setScore(prevScore => {
+          const finalScore = wasCorrect ? prevScore : prevScore;
+          // Call onComplete in next tick to ensure state is settled
+          setTimeout(() => onComplete(finalScore), 0);
+          return prevScore;
+        });
+        return prevIndex; // Don't increment past the last question
+      }
+      
+      return nextIndex;
+    });
   };
 
   return (
@@ -58,6 +70,7 @@ export default function QuizFlow({ onComplete }: QuizFlowProps) {
         </div>
 
         <QuestionCard
+          key={currentQuestionIndex}
           question={currentQuestion}
           onAnswer={handleAnswer}
         />

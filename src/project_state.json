@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "Build an interactive Valentine-themed 5-question MCQ quiz web app with a romantic pastel UI, playful animations, and branching results flow (perfect score coupon vs teasing Valentine prompt with expanding Yes button trick).",
   "architectural_notes": [
     "Single-page interactive web experience with smooth transitions and animated background elements (floating hearts).",
@@ -9,9 +9,10 @@
     "Include shareable link (deployable as a simple static site).",
     "Optional audio (music/sfx) should be user-controlled (toggle/mute)."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Cute romantic cartoon couple meme illustration, pastel palette (valentine-win-meme.dim_1200x800.png)\n- Cute funny teasing Valentine meme illustration, pastel palette (valentine-tease-meme.dim_1200x800.png)\n- Seamless floating hearts background pattern, soft pastel tones (floating-hearts-bg.dim_1600x900.png)",
+  "known_issues": [
+    "Quiz flow gets stuck / does not advance after answering the second question."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-mobile-first-single-page-interactive-valentine-quiz-experience-with-a-consistent-romantic-pastel-visual-theme-soft-pinks-beige-blush-red-accents-rounded-card-ui-subtle-animations-smooth-transitions-and-playful-micro-interactions-keep-performance-fast-and-the-overall-tone-loving-funny-slightly-teasing-extremely-cute-and-romantic",
@@ -114,6 +115,22 @@
       "title": "Include the required generated meme/illustration images as static assets and render them in the relevant result screens; store generated images under frontend/public/assets/generated and reference them directly from the frontend (do not serve images through the backend).",
       "reqIds": [
         "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-quiz-flow-so-it-always-advances-from-question-2-to-question-3-and-continues-through-question-5-after-the-user-selects-an-option-without-getting-stuck-or-leaving-the-ui-in-a-disabled-state",
+      "title": "Fix the quiz flow so it always advances from Question 2 to Question 3 (and continues through Question 5) after the user selects an option, without getting stuck or leaving the UI in a disabled state.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-correct-any-state-score-computation-issues-in-the-quiz-controller-so-the-final-score-passed-to-the-results-routing-is-accurate-regardless-of-timing-e-g-correct-answers-that-trigger-celebration-delays",
+      "title": "Correct any state/score computation issues in the quiz controller so the final score passed to the results routing is accurate regardless of timing (e.g., correct answers that trigger celebration delays).",
+      "reqIds": [
+        "REQ-15"
       ],
       "version": 1
     }

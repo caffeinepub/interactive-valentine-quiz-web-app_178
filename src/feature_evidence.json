@@ -2,50 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-mobile-first-single-page-interactive-valentine-quiz-experience-with-a-consistent-romantic-pastel-visual-theme-soft-pinks-beige-blush-red-accents-rounded-card-ui-subtle-animations-smooth-transitions-and-playful-micro-interactions-keep-performance-fast-and-the-overall-tone-loving-funny-slightly-teasing-extremely-cute-and-romantic",
-      "featureTitle": "Create a mobile-first, single-page interactive Valentine quiz experience with a consistent romantic pastel visual theme (soft pinks, beige, blush, red accents), rounded card UI, subtle animations, smooth transitions, and playful micro-interactions; keep performance fast and the overall tone loving, funny, slightly teasing, extremely cute and romantic.",
+      "featureId": "feature-fix-the-quiz-flow-so-it-always-advances-from-question-2-to-question-3-and-continues-through-question-5-after-the-user-selects-an-option-without-getting-stuck-or-leaving-the-ui-in-a-disabled-state",
+      "featureTitle": "Fix the quiz flow so it always advances from Question 2 to Question 3 (and continues through Question 5) after the user selects an option, without getting stuck or leaving the UI in a disabled state.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/ValentineLayout.tsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-1"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-welcome-screen-with-title-text-exactly-how-well-do-you-know-subtitle-text-exactly-a-tiny-test-made-with-love-just-for-you-and-a-large-primary-cta-button-labeled-exactly-start-the-love-test-that-starts-the-quiz-flow",
-      "featureTitle": "Implement the Welcome Screen with: title text exactly “How Well Do You Know  💖”, subtitle text exactly “A tiny test made with love just for you”, and a large primary CTA button labeled exactly “Start the Love Test →” that starts the quiz flow.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/views/WelcomeScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-5-question-multiple-choice-quiz-flow-showing-one-question-at-a-time-in-a-cute-card-ui-with-a-visible-progress-indicator-e-g-question-1-5-question-2-5-etc-and-a-progress-bar-each-option-must-have-fun-hover-press-animations-and-selecting-the-correct-answer-triggers-a-heart-confetti-animation-feedback",
-      "featureTitle": "Implement the 5-question multiple-choice quiz flow showing one question at a time in a cute card UI, with a visible progress indicator (e.g., “Question 1/5”, “Question 2/5”, etc.) and a progress bar. Each option must have fun hover/press animations, and selecting the correct answer triggers a heart/confetti animation feedback.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/ConfettiHeartsBurst.tsx",
         "frontend/src/components/QuestionCard.tsx",
         "frontend/src/components/QuizFlow.tsx"
       ],
@@ -57,16 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-14"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-use-exactly-these-questions-options-and-correct-answers-q1-what-was-our-first-long-ride-options-a-marina-b-perungudi-highway-correct-c-dlf-d-i-don-t-know-q2-our-first-movie-together-options-a-conjuring-b-materialist-c-final-destination-correct-d-i-don-t-know-q3-what-was-my-first-gift-thing-bought-to-you-options-a-slipper-b-teddy-c-body-wash-correct-d-my-heart-q4-if-i-crave-for-smoething-what-it-would-be-options-a-coffee-b-biriyani-c-pizza-d-parotta-correct-q5-who-is-most-beautiful-person-in-the-world-options-a-aruna-b-aruna-correct-c-aruna-d-aruna",
-      "featureTitle": "Use exactly these questions, options, and correct answers:\n\nQ1. “What was our first long ride?” Options: A. “Marina”, B. “Perungudi Highway” (correct), C. “DLF”, D. “I don't know”\n\nQ2. “Our first movie together?” Options: A. “Conjuring”, B. “Materialist”, C. “Final destination” (correct), D. “I don't know”\n\nQ3. “What was my first gift/ thing bought to you?” Options: A. “Slipper”, B. “Teddy”, C. “Body wash” (correct), D. “My heart”\n\nQ4. “If I crave for smoething what it would be?” Options: A. “Coffee”, B. “Biriyani”, C. “Pizza”, D. “Parotta” (correct)\n\nQ5. “Who is most beautiful person in the world?” Options: A. “Aruna”, B. “Aruna” (correct), C. “Aruna”, D. “Aruna”",
+      "featureId": "feature-correct-any-state-score-computation-issues-in-the-quiz-controller-so-the-final-score-passed-to-the-results-routing-is-accurate-regardless-of-timing-e-g-correct-answers-that-trigger-celebration-delays",
+      "featureTitle": "Correct any state/score computation issues in the quiz controller so the final score passed to the results routing is accurate regardless of timing (e.g., correct answers that trigger celebration delays).",
       "files": [
-        "frontend/src/components/QuizFlow.tsx",
-        "frontend/src/data/valentineQuizQuestions.ts"
+        "frontend/src/components/QuizFlow.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -76,183 +34,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-scoring-and-results-routing-after-the-5th-question-calculate-the-total-correct-answers-and-show-one-of-two-result-screens-a-perfect-score-path-for-5-5-b-non-perfect-path-for-any-score-5",
-      "featureTitle": "Implement scoring and results routing: after the 5th question, calculate the total correct answers and show one of two result screens: (A) Perfect score path for 5/5, (B) Non-perfect path for any score < 5.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/views/NonPerfectResultScreen.tsx",
-        "frontend/src/views/PerfectResultScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-perfect-score-5-5-result-screen-must-display-text-exactly-omg-5-5-show-a-cute-romantic-couple-cartoon-couple-meme-image-then-show-the-coupon-copy-you-have-won-a-date-coupon-redeemable-for-lifelong-lots-of-love-food-cuddles-surprises-include-a-button-labeled-exactly-redeem-my-date-when-clicked-replace-show-the-message-exactly-your-wife-will-contact-you-shortly-for-booking",
-      "featureTitle": "Perfect-score (5/5) result screen must display text exactly “OMG 5/5!!! 😭💖\", show a cute romantic couple/cartoon couple meme image, then show the coupon copy:\n\n“🎟 You have won a DATE COUPON!\nRedeemable for: Lifelong lots of love, food, cuddles & surprises.”\n\nInclude a button labeled exactly “Redeem My Date 💌”. When clicked, replace/show the message exactly: “Your wife will contact you shortly for booking 😉”.",
-      "files": [
-        "frontend/src/views/PerfectResultScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-non-perfect-5-result-screen-must-display-a-cute-funny-teasing-meme-image-not-mean-show-text-exactly-hmm-not-perfect-you-need-to-do-better-then-display-will-you-still-be-my-valentine-with-two-buttons-labeled-exactly-yes-and-no",
-      "featureTitle": "Non-perfect (<5) result screen must display a cute/funny teasing meme image (not mean), show text exactly:\n\n“Hmm… not perfect 👀\nYou need to do better… ”\n\nThen display: “Will you still be my Valentine? 💘” with two buttons labeled exactly “Yes 💖” and “No 😈”.",
-      "files": [
-        "frontend/src/views/NonPerfectResultScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-valentine-trick-interaction-on-the-non-perfect-path-each-time-the-user-clicks-no-increase-the-yes-button-size-and-decrease-the-no-button-size-and-update-the-prompt-text-as-follows-after-first-no-click-show-are-you-sure-after-second-no-click-show-you-have-no-escape-continue-scaling-on-subsequent-no-clicks-until-yes-fills-most-of-the-screen-and-no-becomes-almost-impossible-to-click",
-      "featureTitle": "Implement the Valentine trick interaction on the non-perfect path: each time the user clicks “No 😈”, increase the “Yes 💖” button size and decrease the “No 😈” button size, and update the prompt text as follows: after first No click show “Are you sure?? 🥺”; after second No click show “You have no escape 😌”; continue scaling on subsequent No clicks until “Yes” fills most of the screen and “No” becomes almost impossible to click.",
-      "files": [
-        "frontend/src/index.css",
-        "frontend/src/views/NonPerfectResultScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-when-the-user-clicks-yes-from-the-non-perfect-screen-at-any-stage-show-a-final-celebration-screen-message-with-text-exactly-yay-you-are-my-valentine-forever-plus-confetti-hearts-romantic-animation",
-      "featureTitle": "When the user clicks “Yes 💖” (from the non-perfect screen at any stage), show a final celebration screen/message with text exactly “YAY!!! You are my Valentine forever 💖🌹” plus confetti + hearts + romantic animation.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/ConfettiHeartsBurst.tsx",
-        "frontend/src/views/CelebrationScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-subtle-animated-background-with-floating-hearts-across-the-app-welcome-quiz-and-result-screens-using-soft-pastel-gradients-animations-must-be-subtle-and-not-interfere-with-readability-or-button-interactions",
-      "featureTitle": "Add a subtle animated background with floating hearts across the app (welcome, quiz, and result screens), using soft pastel gradients; animations must be subtle and not interfere with readability or button interactions.",
-      "files": [
-        "frontend/src/components/FloatingHeartsBackground.tsx",
-        "frontend/src/components/ValentineLayout.tsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-optional-audio-gentle-background-music-and-subtle-sound-effects-for-key-interactions-e-g-start-quiz-selecting-an-option-correct-answer-celebration-confetti-provide-a-clear-ui-control-to-mute-unmute-default-must-be-muted-until-the-user-explicitly-enables-audio",
-      "featureTitle": "Add optional audio: gentle background music and subtle sound effects for key interactions (e.g., start quiz, selecting an option, correct answer celebration, confetti). Provide a clear UI control to mute/unmute; default must be muted until the user explicitly enables audio.",
-      "files": [
-        "frontend/src/components/AudioToggle.tsx",
-        "frontend/src/components/QuizFlow.tsx",
-        "frontend/src/components/ValentineLayout.tsx",
-        "frontend/src/hooks/useAudio.ts",
-        "frontend/src/views/CelebrationScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-provide-a-shareable-link-experience-with-no-login-required-the-app-should-be-accessible-via-url-without-authentication-and-the-url-should-be-stable-and-shareable-no-requirement-to-preserve-quiz-progress-across-devices-but-the-app-must-load-directly-into-the-experience-when-opened",
-      "featureTitle": "Provide a shareable link experience with no login required: the app should be accessible via URL without authentication, and the URL should be stable and shareable (no requirement to preserve quiz progress across devices, but the app must load directly into the experience when opened).",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/main.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-include-the-required-generated-meme-illustration-images-as-static-assets-and-render-them-in-the-relevant-result-screens-store-generated-images-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend-do-not-serve-images-through-the-backend",
-      "featureTitle": "Include the required generated meme/illustration images as static assets and render them in the relevant result screens; store generated images under frontend/public/assets/generated and reference them directly from the frontend (do not serve images through the backend).",
-      "files": [
-        "frontend/src/components/FloatingHeartsBackground.tsx",
-        "frontend/src/views/NonPerfectResultScreen.tsx",
-        "frontend/src/views/PerfectResultScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
+        "REQ-15"
       ],
       "confidence": "high"
     }

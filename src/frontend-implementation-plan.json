@@ -1,344 +1,48 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Valentine 5-question love quiz (single-page, romantic pastel UI, playful results)",
+  "title": "Fix quiz progression + scoring race conditions in QuizFlow",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Build a mobile-first single-page Valentine quiz UI with cohesive romantic pastel theme, rounded cards, subtle animations, and smooth transitions.",
+      "id": "REQ-14",
+      "summary": "Ensure the quiz always advances past Question 2 and each new question renders with enabled/clickable options (no stuck/disabled UI).",
       "acceptanceCriteria": [
-        "All screens share a cohesive romantic pastel theme with consistent typography, spacing, and component styling (no default/unstyled pages).",
-        "UI is responsive and usable on small mobile screens without horizontal scrolling.",
-        "Transitions between screens/questions feel smooth (no abrupt layout jumps)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Create the single-page app shell that hosts the full quiz experience (welcome → quiz → results → celebration) with consistent layout wrappers and smooth view transitions. Use shadcn-ui components (e.g., Card, Button) to enforce consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "create",
-          "description": "Define global romantic pastel theme styles (colors, gradients, typography defaults), rounded-card feel, and reusable subtle animation utilities (e.g., fade/slide) used across the app; keep performance-friendly (transform/opacity)."
-        },
-        {
-          "path": "frontend/src/components/ValentineLayout.tsx",
-          "operation": "create",
-          "description": "Add a reusable layout component providing centered mobile-first spacing, rounded card container styling, and shared background/overlay layers. Use shadcn-ui primitives where appropriate; verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Implement the Welcome Screen with exact title/subtitle and a primary CTA to start the quiz.",
-      "acceptanceCriteria": [
-        "The welcome screen renders the specified title, subtitle, and CTA text exactly.",
-        "Clicking the CTA begins Question 1 of 5."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/WelcomeScreen.tsx",
-          "operation": "create",
-          "description": "Create the welcome view rendering the title exactly “How Well Do You Know  💖”, subtitle exactly “A tiny test made with love just for you”, and a primary button exactly “Start the Love Test →” that triggers the quiz start. Use shadcn-ui Button/Card for the CTA and container; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the Welcome screen as the initial view and connect the CTA handler to move into the quiz flow (Question 1). Use shadcn-ui components for consistent UI; verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Implement the 5-question one-at-a-time quiz UI with progress text+bar, option micro-interactions, and celebration feedback on correct answers.",
-      "acceptanceCriteria": [
-        "Only one question is visible at a time and the UI clearly indicates current progress (text + bar).",
-        "Options have noticeable hover/press micro-interactions on desktop and tactile feedback on mobile.",
-        "When the correct option is selected, a heart/confetti animation plays."
+        "From a fresh load, selecting any option on Question 1 advances to Question 2 after the existing delay/animation behavior.",
+        "Selecting any option on Question 2 advances to Question 3 after the existing delay/animation behavior.",
+        "On each newly displayed question, the answer options are enabled/clickable (not permanently disabled from the previous question).",
+        "The user can complete all 5 questions in sequence without needing to refresh the page."
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/QuizFlow.tsx",
-          "operation": "create",
-          "description": "Create the quiz flow controller component: render one question at a time, track current index, handle answer selection, advance logic, and trigger correct-answer feedback animation. Use shadcn-ui Card/Button and Progress to present the question card, options, and progress bar; verify the component's usage instructions before implementing."
+          "operation": "modify",
+          "description": "Fix progression state updates to avoid stale closures (use functional state updates for question index advancement) and ensure the QuestionCard is reset between questions (e.g., by supplying a stable key based on the currentQuestionIndex). Continue using the shadcn-ui Progress component for the progress bar; verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/components/QuestionCard.tsx",
-          "operation": "create",
-          "description": "Create a presentational card for a single question with option buttons including hover/press micro-interactions and mobile-friendly tap feedback. Use shadcn-ui Card/Button for consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/ConfettiHeartsBurst.tsx",
-          "operation": "create",
-          "description": "Implement a lightweight, performant celebration overlay animation (confetti + hearts burst) that can be triggered on correct answers without blocking interactions (pointer-events none)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire QuizFlow into the main view stack and ensure transitions between Welcome and Quiz are smooth (no abrupt layout jumps). Use shadcn-ui primitives consistently; verify the component's usage instructions before implementing."
+          "description": "Reset per-question local state (selectedIndex/hasAnswered) when the incoming question changes so options are re-enabled for each new question, preventing the UI from staying disabled. Continue using the shadcn-ui Card and Button components; verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-4",
-      "summary": "Use the exact provided questions, options, and correct answers (including punctuation/capitalization).",
+      "id": "REQ-15",
+      "summary": "Make quiz score computation deterministic so the final score used for results routing is always correct regardless of animation/timeout timing.",
       "acceptanceCriteria": [
-        "All question prompts and option labels match exactly (including capitalization and punctuation).",
-        "The correct answer for each question matches the user-provided ✅ choice."
+        "Completing the quiz with 5 correct answers results in the perfect-score (5/5) results path.",
+        "Completing the quiz with fewer than 5 correct answers results in the non-perfect results path.",
+        "The score displayed/used at completion matches the number of questions answered correctly (no off-by-one errors due to animation/timeout state)."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/data/valentineQuizQuestions.ts",
-          "operation": "create",
-          "description": "Define the 5 questions exactly as provided (prompts, option text, and correct option index) to be consumed by QuizFlow; ensure strings match exactly."
-        },
         {
           "path": "frontend/src/components/QuizFlow.tsx",
           "operation": "modify",
-          "description": "Update QuizFlow to source questions from valentineQuizQuestions.ts and use the defined correct-answer mapping for scoring/feedback."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Compute score after question 5 and route to either Perfect (5/5) or Non-perfect (<5) result screen.",
-      "acceptanceCriteria": [
-        "Finishing the quiz always navigates to exactly one result screen.",
-        "Score logic correctly distinguishes 5/5 from <5 in all cases."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/PerfectResultScreen.tsx",
-          "operation": "create",
-          "description": "Create the 5/5 result view component with required copy and redemption interaction (detailed in REQ-6). Use shadcn-ui Card/Button for layout and actions; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/views/NonPerfectResultScreen.tsx",
-          "operation": "create",
-          "description": "Create the <5 result view component with required teasing text and Yes/No interaction (detailed in REQ-7/REQ-8). Use shadcn-ui Button for the two actions; verify the component's usage instructions before implementing."
+          "description": "Eliminate timing-dependent score calculation by deriving the next score at answer time (and/or using functional setScore with a synchronized source of truth) and invoking onComplete with the correct final score on the last question, independent of celebration delays/timeouts. Keep existing animation delays behavior intact."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add app-level view state and routing logic so completing Q5 navigates to PerfectResultScreen for 5/5 else NonPerfectResultScreen, and ensure only one result screen is shown per completion."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Perfect-score result screen: exact headline/coupon copy, winning meme image, and Redeem button that reveals the follow-up message.",
-      "acceptanceCriteria": [
-        "The perfect-score screen shows the specified headline text exactly.",
-        "A meme image is displayed on the perfect-score screen.",
-        "The coupon text matches exactly and is visible before redemption.",
-        "Clicking “Redeem My Date 💌” displays the specified follow-up message exactly."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/PerfectResultScreen.tsx",
-          "operation": "modify",
-          "description": "Implement the perfect-score UI with headline exactly “OMG 5/5!!! 😭💖\", render the winning meme image from frontend/public/assets/generated/valentine-win-meme.dim_1200x800.png, show the coupon copy exactly as specified, and add the button exactly “Redeem My Date 💌” that reveals/replaces with “Your wife will contact you shortly for booking 😉”. Use shadcn-ui Card/Button; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/public/assets/generated/valentine-win-meme.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the generated cute romantic cartoon couple meme illustration asset for the perfect-score screen."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Non-perfect result screen: teasing meme, exact multi-line text, and Yes/No buttons with exact labels.",
-      "acceptanceCriteria": [
-        "The non-perfect screen shows the specified multi-line text exactly.",
-        "A teasing meme image is displayed on the non-perfect screen.",
-        "Both buttons (“Yes 💖”, “No 😈”) are visible and clickable initially."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/NonPerfectResultScreen.tsx",
-          "operation": "modify",
-          "description": "Implement the non-perfect UI: show teasing meme from frontend/public/assets/generated/valentine-tease-meme.dim_1200x800.png, display text exactly “Hmm… not perfect 👀\\nYou need to do better… ”, then show “Will you still be my Valentine? 💘” with two buttons labeled exactly “Yes 💖” and “No 😈”. Use shadcn-ui Card/Button; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/public/assets/generated/valentine-tease-meme.dim_1200x800.png",
-          "operation": "create",
-          "description": "Add the generated cute funny teasing Valentine meme illustration asset for the non-perfect screen."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Implement the Valentine trick: repeated No clicks resize buttons and update prompt text after 1st and 2nd No clicks; continue scaling until Yes dominates.",
-      "acceptanceCriteria": [
-        "After the first click on “No 😈”, the prompt text becomes exactly “Are you sure?? 🥺” and Yes is visibly larger while No is smaller.",
-        "After the second click on “No 😈”, the prompt text becomes exactly “You have no escape 😌” and the size difference increases further.",
-        "Additional “No 😈” clicks continue increasing Yes and shrinking No until Yes dominates the layout and No is very difficult (but still technically possible) to click."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/NonPerfectResultScreen.tsx",
-          "operation": "modify",
-          "description": "Add stateful Valentine-trick behavior: count No clicks, progressively scale the “Yes 💖” button up and “No 😈” down each click, and change the prompt text after first No to exactly “Are you sure?? 🥺” and after second No to exactly “You have no escape 😌”; continue scaling so Yes fills most of the screen while No remains barely clickable. Use shadcn-ui Button for consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add small reusable animation/transition helpers (e.g., smooth scaling transitions) to make the button resizing feel playful but smooth, without causing layout jank."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "When Yes is clicked on the non-perfect path, show a final celebration screen with exact text and visible confetti + hearts animation.",
-      "acceptanceCriteria": [
-        "Clicking “Yes 💖” always transitions to the final celebration view.",
-        "The final view displays the specified text exactly.",
-        "A confetti effect and heart/romantic animation are visibly rendered on the final view."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/views/CelebrationScreen.tsx",
-          "operation": "create",
-          "description": "Create the final celebration view that displays exactly “YAY!!! You are my Valentine forever 💖🌹” and renders a confetti + hearts romantic animation overlay (can reuse ConfettiHeartsBurst or a continuous variant)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the “Yes 💖” action from the non-perfect result flow to navigate to CelebrationScreen with a smooth transition."
-        },
-        {
-          "path": "frontend/src/components/ConfettiHeartsBurst.tsx",
-          "operation": "modify",
-          "description": "Extend/adjust the animation component (if needed) to support a stronger celebration variant suitable for the final screen while keeping performance fast and interactions unblocked."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Add a subtle animated floating-hearts background with soft pastel gradients across all screens without harming readability or interactions.",
-      "acceptanceCriteria": [
-        "A floating-hearts background effect is visible on all major screens.",
-        "Foreground cards and text remain readable (sufficient contrast) and interactive elements remain clickable."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/floating-hearts-bg.dim_1600x900.png",
-          "operation": "create",
-          "description": "Add the generated seamless floating hearts background pattern asset used across the app."
-        },
-        {
-          "path": "frontend/src/components/FloatingHeartsBackground.tsx",
-          "operation": "create",
-          "description": "Implement a subtle animated background layer using the generated pattern (frontend/public/assets/generated/floating-hearts-bg.dim_1600x900.png) plus soft pastel gradients; ensure pointer-events none and low visual noise."
-        },
-        {
-          "path": "frontend/src/components/ValentineLayout.tsx",
-          "operation": "modify",
-          "description": "Render FloatingHeartsBackground behind all screens (welcome, quiz, results, celebration) and ensure foreground cards have sufficient contrast and remain fully interactive."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add global background/gradient tokens and ensure the background animation remains subtle (reduced motion-friendly) and does not interfere with readability."
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Add optional audio (music + SFX) with a clear mute/unmute control; default muted until user enables.",
-      "acceptanceCriteria": [
-        "A user-visible toggle exists to enable/disable audio.",
-        "Audio does not autoplay on page load; it only plays after the user opts in.",
-        "When muted, no music or sound effects play."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useAudio.ts",
-          "operation": "create",
-          "description": "Create an audio controller hook that is muted by default and only starts playback after an explicit user action; provide functions for gentle background music and subtle SFX triggers for key interactions."
-        },
-        {
-          "path": "frontend/src/components/AudioToggle.tsx",
-          "operation": "create",
-          "description": "Create a small UI control to mute/unmute audio with clear labeling/state. Use shadcn-ui Button/Switch as appropriate; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/ValentineLayout.tsx",
-          "operation": "modify",
-          "description": "Place the audio toggle in a consistent, unobtrusive location across the experience (welcome/quiz/results) so users can enable/disable audio at any time. Use shadcn-ui components; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/QuizFlow.tsx",
-          "operation": "modify",
-          "description": "Trigger optional sound effects for start quiz, selecting an option, and correct-answer celebration via useAudio (respecting mute state)."
-        },
-        {
-          "path": "frontend/src/views/CelebrationScreen.tsx",
-          "operation": "modify",
-          "description": "Trigger a celebration sound effect (respecting mute state) when entering the final celebration view."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Ensure the experience is accessible via a stable, shareable URL with no login/authentication required.",
-      "acceptanceCriteria": [
-        "Opening the app in an incognito window works without any login flow.",
-        "Copying and sharing the app URL opens the same app experience successfully."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/main.tsx",
-          "operation": "modify",
-          "description": "Remove the InternetIdentityProvider wrapper/import so the app loads directly without any authentication gate; keep the app boot fast and deterministic on initial load."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Ensure the app defaults to the welcome screen on direct load and does not require any persisted session/auth state to start the experience."
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Include required generated images as static assets under frontend/public/assets/generated and render them in the relevant result screens (no backend image serving).",
-      "acceptanceCriteria": [
-        "Generated images are present under frontend/public/assets/generated and load correctly in the built app.",
-        "The perfect-score and non-perfect result screens each display their respective image.",
-        "No backend endpoints are used to fetch/serve these images."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/valentine-win-meme.dim_1200x800.png",
-          "operation": "create",
-          "description": "Ensure the generated win meme image exists as a static asset under the required path for direct frontend reference."
-        },
-        {
-          "path": "frontend/public/assets/generated/valentine-tease-meme.dim_1200x800.png",
-          "operation": "create",
-          "description": "Ensure the generated tease meme image exists as a static asset under the required path for direct frontend reference."
-        },
-        {
-          "path": "frontend/public/assets/generated/floating-hearts-bg.dim_1600x900.png",
-          "operation": "create",
-          "description": "Ensure the generated floating hearts background pattern exists as a static asset under the required path for direct frontend reference."
-        },
-        {
-          "path": "frontend/src/views/PerfectResultScreen.tsx",
-          "operation": "modify",
-          "description": "Render frontend/public/assets/generated/valentine-win-meme.dim_1200x800.png via direct static asset reference (no backend)."
-        },
-        {
-          "path": "frontend/src/views/NonPerfectResultScreen.tsx",
-          "operation": "modify",
-          "description": "Render frontend/public/assets/generated/valentine-tease-meme.dim_1200x800.png via direct static asset reference (no backend)."
-        },
-        {
-          "path": "frontend/src/components/FloatingHeartsBackground.tsx",
-          "operation": "modify",
-          "description": "Use frontend/public/assets/generated/floating-hearts-bg.dim_1600x900.png for the app-wide background effect via direct static asset reference (no backend)."
+          "description": "Verify results routing logic remains consistent with the corrected finalScore passed from QuizFlow (perfect vs non-perfect view selection) and ensure the score state updates correctly when the quiz completes."
         }
       ]
     }
